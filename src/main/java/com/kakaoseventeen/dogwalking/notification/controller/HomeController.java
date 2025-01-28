@@ -5,6 +5,7 @@ import com.kakaoseventeen.dogwalking._core.utils.ApiResponseGenerator;
 import com.kakaoseventeen.dogwalking._core.utils.CursorRequest;
 import com.kakaoseventeen.dogwalking.notification.dto.response.HomeResDTO;
 import com.kakaoseventeen.dogwalking.notification.service.HomeService;
+import com.kakaoseventeen.dogwalking.notification.service.HomeServiceVer2;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import java.util.List;
 public class HomeController {
 
     private final HomeService homeService;
+    private final HomeServiceVer2 homeServiceVer2;
 
     /**
      * 메인페이지에서 공고글을 불러오는 메서드
@@ -31,6 +33,7 @@ public class HomeController {
      * @param search 검색어
      * @return
      */
+
     @GetMapping("/home")
     public ResponseEntity<?> getPosts(@AuthenticationPrincipal CustomUserDetails customUserDetails,
                                       CursorRequest cursorRequest,
@@ -40,13 +43,12 @@ public class HomeController {
                                       @RequestParam(required = false, value = "breed") List<String> breed,
                                       @RequestParam(required = false, value = "word") String search
                                       ) {
-        
-        if(big == null) big = List.of();
-        if(breed == null) breed = List.of();
-        if(search == null) search = "";
 
-        HomeResDTO respDTO = homeService.home(cursorRequest,latitude,longitude, big, breed, search, customUserDetails);
+   //     HomeResDTO respDTO = homeService.home(cursorRequest,latitude,longitude, big, breed, search, customUserDetails);
+       HomeResDTO respDTO = homeServiceVer2.home(cursorRequest,latitude,longitude, big, breed, search, customUserDetails);
 
         return ApiResponseGenerator.success(respDTO, HttpStatus.OK);
     }
+
+
 }

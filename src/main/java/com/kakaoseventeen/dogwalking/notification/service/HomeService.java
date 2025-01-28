@@ -31,6 +31,7 @@ public class HomeService {
     /**
      * 메인페이지에서 공고글을 불러오는 메서드
      */
+    /*
     public HomeResDTO home(CursorRequest cursorRequest, Double lat, Double lng, List<String> big, List<String> breed, String search, CustomUserDetails customUserDetails) {
         String image;
         if(customUserDetails == null){
@@ -43,8 +44,12 @@ public class HomeService {
 
         Double lastKey = getLastKey(notifications,lat,lng);
 
-        return HomeResDTO.of(cursorRequest.next(lastKey, 20), notifications, image);
+     //   return HomeResDTO.of(cursorRequest.next(lastKey, 20), notifications, image);
     }
+
+
+     */
+
 
     /**
      * 메인페이지에서 위도, 경도, 견종, 크기, 검색어를 통해 포스트를 가져오는 메서드

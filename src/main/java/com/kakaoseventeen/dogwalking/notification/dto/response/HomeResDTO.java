@@ -2,6 +2,7 @@ package com.kakaoseventeen.dogwalking.notification.dto.response;
 
 import com.kakaoseventeen.dogwalking._core.utils.CursorRequest;
 import com.kakaoseventeen.dogwalking.notification.domain.Notification;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 
 import java.util.List;
@@ -25,13 +26,6 @@ public class HomeResDTO {
         this.image = image;
     }
 
-    public static HomeResDTO of(CursorRequest nextCursorRequest, List<Notification> notifications, String image) {
-        List<NotificationDTO> notificationDTOs = notifications.stream()
-                .map(NotificationDTO::new)
-                .toList();
-        return new HomeResDTO(nextCursorRequest, notificationDTOs, image);
-    }
-
     @Getter
     public static class NotificationDTO {
         private Long notificationId;
@@ -41,15 +35,18 @@ public class HomeResDTO {
         private DogInfo dogInfo;
         private int dogBowl;
 
-        public NotificationDTO(Long notificationId, String title, Double lat, Double lng, DogInfo dogInfo, int dogBowl) {
+        @QueryProjection
+        public NotificationDTO(Long notificationId, String title, Double lat, Double lng, String dogName, String dogImage, int dogAge, String dogSex, String dogBreed, int dogBowl) {
             this.notificationId = notificationId;
             this.title = title;
             this.lat = lat;
             this.lng = lng;
-            this.dogInfo = dogInfo;
+            this.dogInfo = new DogInfo(dogName, dogImage, dogAge, dogSex, dogBreed);
             this.dogBowl = dogBowl;
         }
+    }
 
+        /*
         public NotificationDTO(Notification post) {
             this(
                     post.getId(),
@@ -67,6 +64,8 @@ public class HomeResDTO {
             );
         }
     }
+
+         */
 
     @Getter
     public static class DogInfo {
